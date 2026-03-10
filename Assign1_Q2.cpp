@@ -13,26 +13,33 @@ struct Date
     int day;
     int month;
     int year;
-};
-void initDate(struct Date *ptr)
+public:
+void initDate()
 {
-    ptr->day = 01;
-    ptr->month =01;
-    ptr-> year =2000;
+    day = 01;
+    month =01;
+    year =2000;
 }
-
-void acceptDateFromConsole(struct Date *ptr)
+public:
+void acceptDateFromConsole()
 {
     cout << "Enter Day, Month, Year: " << endl;
-    cin >> ptr->day >> ptr->month >> ptr->year;
+    cin >> day >> month >> year;
 }
 
+bool isLeapYear() {
+    int y = year;
+    // Leap year logic
+    if (y=(y % 4 == 0 && y % 100 != 0) || (y % 400 == 0)) {
+        return true;
+    }
+    return false;
+}
 
-void printDateOnConsole(struct Date *ptr)
+void printDateOnConsole()
 {
-cout << "Day: "<<ptr->day << " Month: "<< ptr->month <<" Year: "<<ptr->year<< endl;
+cout << "Day: "<<day << " Month: "<< month <<" Year: "<<year<< endl;
 }
-
 
 int menuList(void)
 {
@@ -41,30 +48,42 @@ int menuList(void)
     cout<<"1.Initialize Date"<<endl;
     cout<<"2.Accept Date"<<endl;
     cout<<"3.Print Date"<<endl;
+    cout<<"4. Is it a Leap year ?"<<endl;
     cin>> choice;
     return choice ;
 
 }
- 
+
+};
+
 int main()
 {
-    int  choice;
+    int choice;
     struct Date dt;
-    while((choice = menuList())!=0)
+    while ((choice = dt.menuList()) != 0)
     {
-        switch(choice)
-        {   case 1: initDate(&dt);
-                    break;
-            case 2:acceptDateFromConsole(&dt);
-                    break;
-            case 3: printDateOnConsole(&dt);
-                    break;   
-
+        switch (choice)
+        {
+        case 1:
+            dt.initDate();
+            break;
+        case 2:
+            dt.acceptDateFromConsole();
+            break;
+        case 3:
+            dt.printDateOnConsole();
+            break;
+        case 4:
+            if (dt.isLeapYear())
+            {
+                cout << dt.year << " is a Leap Year!" << endl;
+            }
+            else
+            {
+                cout << dt.year << " is NOT a Leap Year." << endl;
+            }
+            break;
         }
     }
     return 0;
 }
-
-
-
-
