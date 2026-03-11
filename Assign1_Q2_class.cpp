@@ -24,7 +24,7 @@ class Date
     }
 
     
-    public:
+    
     void acceptDateFromConsole()
     {
         cout<<"Enter Day Month Year" <<endl;
@@ -59,7 +59,9 @@ class Date
     }
 
 int getYear()
-{return year;}
+{
+    return year;
+}
 
 };
 
