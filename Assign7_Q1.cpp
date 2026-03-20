@@ -1,3 +1,9 @@
+#include<iostream>
+using namespace std;
+
+
+
+
 // . Provide menu driven code for the functionalities:
 // 1. Add Manager
 // 2. Add Salesman
@@ -42,7 +48,6 @@ public:
     }
     virtual void accept()
     {
-        cout << "--------Employee --------" << endl;
         cout << "Enter Employee Id: ";
         cin >> id;
         cout << "Enter Salary: ";
@@ -50,11 +55,11 @@ public:
     }
     virtual void display()
     {
-        cout << "--------Employee --------" << endl;
         cout << "Id: " << id << endl;
         cout << "Salary: " << salary << endl;
-        cout << "--------------------------" << endl;
     }
+    virtual ~Employee()
+    { }
 };
 
 class Manager : virtual public Employee
@@ -77,15 +82,13 @@ public:
     {
         return bonus;
     }
-    void accept()
+    virtual void accept()
     {
-        cout << "-----------Manager----------" << endl;
         Employee::accept();
         acceptManager();
     }
     virtual void display()
     {
-        cout << "-----------Manager----------" << endl;
         Employee::display();
         displayManager();
     }
@@ -93,13 +96,11 @@ public:
 protected:
     void acceptManager()
     {
-        cout << "-----------Manager----------" << endl;
         cout << "Enter Bonus for Manager: ";
         cin >> bonus;
     }
     void displayManager()
     {
-        cout << "-----------Manager----------" << endl;
         cout << "Bonus Of Manager: " << bonus << endl;
     }
 };
@@ -125,15 +126,13 @@ public:
     {
         return commission;
     }
-    void accept()
+    virtual void accept()
     {
-        cout << "-----------SalesMan----------" << endl;
         Employee::accept();
         acceptSalesMan();
     }
-    void display()
+    virtual void display()
     {
-        cout << "-----------SalesMan----------" << endl;
         Employee::display();
         displaySalesMan();
     }
@@ -142,15 +141,12 @@ protected:
     void acceptSalesMan()
 
     {
-        cout << "-----------SalesMan----------" << endl;
-        cout << "Enter Sales Man commission";
+        cout << "Enter Sales Man commission: ";
         cin >> commission;
     }
     void displaySalesMan()
     {
-        cout << "-----------SalesMan----------" << endl;
         cout << "Commission of SalesMan: " << commission << endl;
-        ;
     }
 };
 
@@ -165,19 +161,21 @@ public:
     }
     void accept()
     {
-        Employee::accept();
-
-        // Manager::accept();
-
-        // Salesman::accept();
+         Employee::accept();
+         
+        Salesman :: acceptSalesMan();
+        Manager :: acceptManager();
+        
     }
-    void display()
+
+     void display()
     {
         Employee::display();
 
-        // Manager::display();
+        Salesman :: displaySalesMan();
+        Manager:: displayManager();
 
-        // Salesman::display();
+        
     }
 };
 
@@ -198,102 +196,100 @@ int MenuList()
 
 int main()
 {
-    // Salesmanager sm;
-    // sm.accept();
-    // sm.display();
-    int i=0,t;
-    cout<<"Enter size"; cin>>t;
-    Employee *ptr[t];
-
-    
-
     int choice;
-    int m1 = 0;
-            int s1 = 0;
-            int sm = 0;
+    int n=0;
+    Employee *ptr[10];
+   
 
-    while ((choice = ::MenuList()) != 0)
+    int m=0;
+    int m1=0;
+    int sm=0;
+    int sm1=0;
+    while((choice=::MenuList())!=0)
     {
-
-        switch (choice)
+        switch(choice)
         {
-
-        case 1:
-            
-            
-                ptr[i] = new Manager();
-                ptr[i]->accept();
-                
-                i++;
-                break;
-            
-        case 2:
-            
-                ptr[i] = new Salesman();
-                ptr[i]->accept();
-                i++;
-            
-        case 3:
-            
-                ptr[i] = new Salesmanager();
-                ptr[i]->accept();
-                i++;
-                break;
-            
-
-        case 4:
-        {
-            
-            for (int j = 0; j < i; j++)
+            case 1:
+            if(n<10)
             {
-                if (typeid(*ptr[j]) == typeid(Manager))
+                ptr[n]=new Manager;
+                ptr[n]->accept();
+                n++;
+                m++;
+            }
+            break;
+            case 2:
+            if(n<10)
+            {
+                ptr[n]=new Salesman;
+                ptr[n]->accept();
+                n++;
+            }
+            break;
+            case 3:
+            if(n<10)
+            {
+                ptr[n]=new Salesmanager;
+                ptr[n]->accept();
+                n++;
+            }
+            break;
+            case 4:
+
+            for(int i=0;i<n;i++)
+            {
+                if(typeid(*ptr[i])==typeid(Manager))
                 {
                     m1++;
                 }
-                else if (typeid(*ptr[j]) == typeid(Salesman))
-                {
-                    s1++;
-                }
-                else
+                else if(typeid(*ptr[i])==typeid(Salesman))
                 {
                     sm++;
                 }
+                else if(typeid(*ptr[i])==typeid(Salesmanager))
+                {
+                    sm1++;
+                }
+                cout << "Total manager: " << m1 << endl;
+                cout << "Total Salesman: " << sm << endl;
+                cout << "Total Sales-Manager: " << sm1<< endl;
             }
-            cout << "Total manager: " << m1 << endl;
-            cout << "Total Salesman: " << s1 << endl;
-            cout << "Total Sales-Manager: " << sm << endl;
-        }
-
-        break;
-
-        case 5:
-            // for(int i; i<n; i++)
-            // {
-            //     ptr[i]->display();
-            // }
-
-            
-            
-                if (typeid(*ptr[i]) == typeid(Manager))
-                    ptr[i]->display();
-            
             break;
 
-        case 6:
-            
-            
-                if (typeid(*ptr[i]) == typeid(Salesman))
+            case 5:
+            for(int i=0; i<n;i++)
+            {
+                 if (typeid(*ptr[i])==typeid(Manager))
+                 {
                     ptr[i]->display();
-         
-
+                 }
+            }
+            break;
+            case 6:
+            for(int i=0; i<n;i++)
+            {
+                if(typeid(*ptr[i])==typeid(Salesman))
+                {
+                    ptr[i]->display();
+                }
+            }
             break;
 
-        case 7:
-            
-                if (typeid(*ptr[i]) == typeid(Salesmanager))
+            case 7:
+            for(int i=0;i<n;i++)
+            {
+                if (typeid(*ptr[i])==typeid(Salesmanager))
+                {
                     ptr[i]->display();
-           
+                }
+            }
             break;
+            
+
+            
+
         }
     }
+
 }
+
